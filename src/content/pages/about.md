@@ -12,8 +12,8 @@ description: What the Rare Zebra prototype is, and what it isn't.
 
 I'm Danny Englander.
 
-I built this application with Claude Code, often from my phone without
-typing a word, using Wispr Flow for dictation connected to Claude Desktop
+I built this application with Claude AI and Claude Code, often from my phone without
+typing a word, using Wispr Flow AI for dictation connected to Claude Desktop
 and my local development environment. If you'd like to learn more about this
 site and how I built it, or if you have any other questions, feel free to
 [contact me](/contact).
