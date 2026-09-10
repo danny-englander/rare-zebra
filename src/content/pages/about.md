@@ -16,7 +16,7 @@ I built this application with Claude AI and Claude Code, often from my phone wit
 typing a word, using Wispr Flow AI for dictation connected to Claude Desktop
 and my local development environment. If you'd like to learn more about this
 site and how I built it, or if you have any other questions, feel free to
-[contact me](/contact).
+[contact me](/contact/).
 
 <figure class="block w-full sm:hidden">
   <img src="/images/danny-englander.jpg" alt="Danny Englander smiling outdoors" class="w-full rounded-xl" />
@@ -54,4 +54,4 @@ qualified healthcare provider or a patient organization for that condition.
 
 ## Questions or feedback
 
-Use the [contact page](/contact) to get in touch.
+Use the [contact page](/contact/) to get in touch.
