@@ -215,3 +215,20 @@ html {
     transition: none;
   }
 }
+
+/* Printed disease pages should always read as black ink on white paper,
+   regardless of which theme (light/dark, system or user-chosen) is active
+   on screen — otherwise dark-theme's pale text color prints near-invisible
+   against the white page most browsers force for printing. */
+@media print {
+  :root,
+  [data-theme] {
+    color-scheme: light !important;
+    --color-base-100: #ffffff !important;
+    --color-base-200: #ffffff !important;
+    --color-base-300: #a3a3a3 !important;
+    --color-base-content: #000000 !important;
+    --color-primary: #1a1a1a !important;
+    --zebra-eye-fill: currentColor !important;
+  }
+}
