@@ -19,6 +19,8 @@ list.
 - About, Privacy Policy, Contact, and Milestones pages
 - A Netlify Forms-backed contact form
 - A modern SVG zebra logo, replacing the original hexagon mark
+- A printable, citable PDF view for each disease detail page, with an
+  Orphanet source citation and data release date
 
 ## Planned
 
