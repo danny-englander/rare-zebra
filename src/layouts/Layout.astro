@@ -2,6 +2,7 @@
 import "../styles/global.css";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import GoatCounter from "../components/GoatCounter.astro";
 
 interface Props {
   title: string;
@@ -66,6 +67,7 @@ const ogImageURL = new URL("/og-image.png", Astro.site);
         if (saved) document.documentElement.setAttribute("data-theme", saved);
       } catch (e) {}
     </script>
+    {import.meta.env.PROD && <GoatCounter />}
   </head>
   <body class='min-h-screen bg-base-100 text-base-content'>
     <Header />
