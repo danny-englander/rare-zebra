@@ -1,5 +1,9 @@
 # Rare Zebra (prototype)
 
+I built rarezebra.org with Claude AI and Claude Code, often from my phone
+without typing a word, using Wispr Flow AI for dictation connected to Claude
+Desktop and my local development environment.
+
 [![CI](https://github.com/danny-englander/rare-zebra/actions/workflows/ci.yml/badge.svg)](https://github.com/danny-englander/rare-zebra/actions/workflows/ci.yml)
 
 A fast, static search tool for rare diseases — Astro + Tailwind 4 + daisyUI +
