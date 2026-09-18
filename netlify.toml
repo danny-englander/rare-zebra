@@ -1,3 +1,22 @@
 [build]
   command = "npm run build"
   publish = "dist"
+
+# Apex ↔ www and HTTP → HTTPS are handled by Netlify DNS (www is primary).
+# The default *.netlify.app host still serves 200s unless we force it over.
+[[redirects]]
+  from = "https://rare-zebra.netlify.app/*"
+  to = "https://www.rarezebra.org/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "http://rare-zebra.netlify.app/*"
+  to = "https://www.rarezebra.org/:splat"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/__forms.html"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
