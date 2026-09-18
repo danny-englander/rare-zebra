@@ -375,6 +375,18 @@ const facetGroups = [
       var fallbackData = null;
       var currentItems = [];
       var visibleCount = PAGE_SIZE;
+      var PREFERRED_ORIGIN = "https://www.rarezebra.org";
+
+      // Pagefind may emit a host-absolute URL from <link rel="canonical">.
+      // Pin it to the primary origin so result links never leak apex/http/
+      // netlify.app even if the index was built or viewed on another host.
+      function preferredUrl(url) {
+        try {
+          return PREFERRED_ORIGIN + new URL(url, PREFERRED_ORIGIN).pathname;
+        } catch (e) {
+          return url;
+        }
+      }
 
       function openFilterDialog() {
         filterDialog.showModal();
@@ -638,7 +650,7 @@ const facetGroups = [
               ).then(function (results) {
                 currentItems = results.map(function (d) {
                   return {
-                    url: d.url,
+                    url: preferredUrl(d.url),
                     title: (d.meta && d.meta.title) || d.url,
                     excerpt: (d.meta && d.meta.note) || d.excerpt,
                     orphaCode: d.meta && d.meta.orphaCode,
