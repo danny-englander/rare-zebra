@@ -1,5 +1,16 @@
 # Rare Zebra (prototype)
 
+I was recently diagnosed with two rare diseases, Myasthenia gravis and
+Rippling muscle disease. I'm also experiencing as of yet unexplained
+neuropathy in my feet, toes, glutes, fingers, and hands as well as extreme
+pain. Diabetes, metabolic, and vitamin deficiencies have all been ruled out
+as well as a negative CASPR2 test and a negative Sjögren's test. Upcoming is
+a chest CT with contrast and a second EMG. I am also hoping for a lip biopsy
+and a skin punch biopsy but of course one step at a time. I was inspired to
+build rarezebra.org with Claude AI and Claude Code, often from my phone
+without typing a word, using Wispr Flow AI for dictation connected to Claude
+Desktop and my local development environment.
+
 [![CI](https://github.com/danny-englander/rare-zebra/actions/workflows/ci.yml/badge.svg)](https://github.com/danny-englander/rare-zebra/actions/workflows/ci.yml)
 
 A fast, static search tool for rare diseases — Astro + Tailwind 4 + daisyUI +
