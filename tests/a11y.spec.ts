@@ -5,7 +5,7 @@ import AxeBuilder from "@axe-core/playwright";
 // template is shared across every disease, so one instance exercises the
 // markup without scanning all ~920 generated pages.
 const PAGES = ["/", "/diseases/rippling-muscle-disease/"];
-const THEMES = ["reflib", "reflib-dark"] as const;
+const THEMES = ["lagoon", "paper"] as const;
 
 // Layout.astro applies `data-theme` from localStorage before first paint
 // (see the inline script in src/layouts/Layout.astro), so setting it via

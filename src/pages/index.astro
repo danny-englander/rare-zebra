@@ -97,7 +97,7 @@ const facetGroups = [
     <div class='flex items-start justify-between gap-4'>
       <div class='flex-1'>
         <h1
-          class='font-display text-3xl font-semibold tracking-tight sm:text-4xl'
+          class='font-display text-4xl font-medium tracking-tight sm:text-5xl'
         >
           Find a rare disease
         </h1>
@@ -113,14 +113,14 @@ const facetGroups = [
     </div>
 
     <details
-      class='collapse-arrow collapse mt-3 w-full border border-dotted border-base-content bg-base-100'
+      class='collapse-arrow collapse mt-3 w-full rounded-box border border-base-300 bg-base-200'
     >
-      <summary class='collapse-title flex min-h-0 items-center gap-2 py-2 text-base font-medium text-base-content/80'>
+      <summary class='collapse-title flex min-h-0 items-center gap-2 py-2 text-base font-medium text-muted'>
         <Icon name='material-symbols:help-outline' class='h-4 w-4 shrink-0' />
         What is this?
       </summary>
       <div class='collapse-content'>
-        <p class='text-base text-base-content/95'>
+        <p class='text-base text-base-content'>
           This application is a working prototype and not a comprehensive
           database. It currently covers a sample of {
             diseases.length
@@ -137,14 +137,14 @@ const facetGroups = [
     </details>
 
     <details
-      class='collapse-arrow collapse mt-3 w-full border border-dotted border-base-content bg-base-100'
+      class='collapse-arrow collapse mt-3 w-full rounded-box border border-base-300 bg-base-200'
     >
-      <summary class='collapse-title flex min-h-0 items-center gap-2 py-2 text-base font-medium text-base-content/80'>
+      <summary class='collapse-title flex min-h-0 items-center gap-2 py-2 text-base font-medium text-muted'>
         <Icon name='material-symbols:info-outline' class='h-4 w-4 shrink-0' />
         How this search works
       </summary>
       <div class='collapse-content'>
-        <ul class='list-disc space-y-1 pl-5 text-base text-base-content/95'>
+        <ul class='list-disc space-y-1 pl-5 text-base text-base-content'>
           <li>
             As you type, results filter instantly, matching against each
             disease's name, synonyms, and symptoms.
@@ -171,7 +171,8 @@ const facetGroups = [
     </details>
 
     <div class='mx-auto mt-8'>
-      <p class='border-t border-base-300 pt-4 text-base text-base-content/95'>
+      <div class='dot-rule w-full' aria-hidden='true'></div>
+      <p class='pt-4 text-base text-base-content'>
         Search by name, synonym, or symptom. Filter by body system or
         inheritance pattern.
       </p>
@@ -181,7 +182,7 @@ const facetGroups = [
         id='search-input'
         type='search'
         placeholder='Search…'
-        class='input input-bordered field-accent mt-3 min-h-11 w-full'
+        class='input input-bordered field-accent mt-3 min-h-11 w-full bg-base-200'
         autocomplete='off'
       />
 
@@ -189,7 +190,7 @@ const facetGroups = [
         type='button'
         id='filter-trigger'
         aria-haspopup='dialog'
-        class='btn btn-outline field-accent mt-3 min-h-11 w-full justify-between font-normal transition-none'
+        class='btn btn-outline field-accent mt-3 min-h-11 w-full justify-between font-normal transition-none bg-base-200 hover:bg-base-200'
       >
         <span class='flex items-center gap-2'>
           <svg
@@ -211,7 +212,7 @@ const facetGroups = [
           >
         </span>
         <svg
-          class='h-4 w-4 shrink-0 text-base-content/50'
+          class='h-4 w-4 shrink-0 text-muted'
           xmlns='http://www.w3.org/2000/svg'
           viewBox='0 0 24 24'
           fill='none'
@@ -229,7 +230,7 @@ const facetGroups = [
 
       <p
         id='result-count'
-        class='mt-6 text-base text-base-content/95'
+        class='mt-6 text-base text-base-content'
         aria-live='polite'
       >
         {diseases.length} results
@@ -237,15 +238,15 @@ const facetGroups = [
       <ul id='results-list' class='mt-2 space-y-4'>
         {
           sortedDiseases.slice(0, 20).map((d) => (
-            <li class='rounded-box border border-base-300 bg-base-200 p-4'>
+            <li class='rounded-box border border-base-300 bg-base-200 p-4 transition-colors hover:border-neutral'>
               <a
                 href={`/diseases/${d.slug}/`}
-                class='font-display inline-link text-xl font-medium'
+                class='font-display inline-link text-2xl font-medium'
               >
                 {d.name}
               </a>
-              <p class='mt-1 text-base text-base-content/95'>{d.note}</p>
-              <p class='mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-base-content/95'>
+              <p class='mt-1 text-base text-base-content'>{d.note}</p>
+              <p class='mt-2 flex flex-wrap gap-x-3 gap-y-1 text-muted font-mono text-xs tracking-wide'>
                 <span>{d.orphaCode}</span>
                 <span>{d.system}</span>
                 <span>{d.inheritance.join(", ")}</span>
@@ -264,12 +265,12 @@ const facetGroups = [
     class='m-0 h-dvh max-h-none w-dvw max-w-none border-0 bg-transparent p-0 items-end justify-center md:items-stretch md:justify-end'
   >
     <div
-      class='filter-panel flex max-h-[85dvh] w-full flex-col rounded-t-box bg-base-100 shadow-xl md:h-full md:max-h-none md:w-full md:max-w-sm md:rounded-t-none md:rounded-l-box'
+      class='filter-panel flex max-h-[85dvh] w-full flex-col rounded-t-box border-l border-base-300 bg-base-200 shadow-xl md:h-full md:max-h-none md:w-full md:max-w-sm md:rounded-t-none md:rounded-l-box'
     >
       <div
         class='flex shrink-0 items-center justify-between border-b border-base-300 p-4'
       >
-        <h2 class='font-display text-xl font-semibold'>Filters</h2>
+        <h2 class='font-display text-xl font-medium'>Filters</h2>
         <button
           type='button'
           id='filter-close'
@@ -299,7 +300,7 @@ const facetGroups = [
               class='collapse-arrow collapse border border-base-300 bg-base-100'
               open={group.defaultOpen}
             >
-              <summary class='collapse-title flex min-h-0 items-center gap-2 py-3 text-base font-medium text-base-content/80'>
+              <summary class='collapse-title flex min-h-0 items-center gap-2 py-3 text-base font-medium text-muted'>
                 <span
                   class={`h-2 w-2 shrink-0 rounded-full ${FACET_COLORS[group.color].dot}`}
                   aria-hidden='true'
@@ -316,7 +317,7 @@ const facetGroups = [
                         data-facet-group={group.key}
                         data-facet-value={value}
                       />
-                      <span class={`badge flex min-h-11 items-center gap-1 border border-base-300 px-3 text-base ${FACET_COLORS[group.color].pill}`}>
+                      <span class={`badge flex min-h-11 items-center gap-1 border border-neutral px-3 text-base ${FACET_COLORS[group.color].pill}`}>
                         {value}
                         <span
                           class='text-sm opacity-60'
@@ -549,16 +550,16 @@ const facetGroups = [
 
       function itemHtml(d) {
         return (
-          '<li class="rounded-box border border-base-300 bg-base-200 p-4">' +
+          '<li class="rounded-box border border-base-300 bg-base-200 p-4 transition-colors hover:border-neutral">' +
           '<a href="' +
           d.url +
-          '" class="font-display inline-link text-xl font-medium">' +
+          '" class="font-display inline-link text-2xl font-medium">' +
           d.title +
           "</a>" +
-          '<p class="mt-1 text-base text-base-content/95">' +
+          '<p class="mt-1 text-base text-base-content">' +
           (d.excerpt || "") +
           "</p>" +
-          '<p class="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-sm text-base-content/95">' +
+          '<p class="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-muted font-mono text-xs tracking-wide">' +
           (d.orphaCode ? "<span>" + d.orphaCode + "</span>" : "") +
           (d.system ? "<span>" + d.system + "</span>" : "") +
           (d.inheritance ? "<span>" + d.inheritance + "</span>" : "") +
@@ -580,7 +581,7 @@ const facetGroups = [
 
         if (currentItems.length === 0) {
           resultsList.innerHTML =
-            '<li class="py-8 text-base text-base-content/95">' +
+            '<li class="py-8 text-base text-base-content">' +
             "No matches in this prototype's sample. That reflects what's in the " +
             "current sample, not whether the disease is real. Try a different " +
             "spelling, a related symptom, or fewer filters." +
@@ -596,7 +597,7 @@ const facetGroups = [
         if (remaining > 0) {
           var nextBatch = Math.min(PAGE_SIZE, remaining);
           showMoreContainer.innerHTML =
-            '<button type="button" id="show-more-btn" class="w-full rounded-field border border-base-300 py-2 text-base text-base-content/95 transition-colors hover:border-primary hover:text-primary focus-visible:border-primary focus-visible:text-primary">' +
+            '<button type="button" id="show-more-btn" class="btn btn-outline btn-primary w-full rounded-full">' +
             "Show " +
             nextBatch +
             " more (" +

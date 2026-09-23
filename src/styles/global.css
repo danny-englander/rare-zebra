@@ -2,227 +2,181 @@
 
 @plugin "daisyui" {
   themes:
-    reflib --default,
-    reflib-dark --prefersdark;
+    lagoon --default --prefersdark,
+    paper;
 }
 
-/* Warm, plain-spoken "reference library" palette — not clinical blue,
-   not marketing cream+terracotta. Muted teal for trust/clarity, warm
-   amber reserved for rarity/prevalence signals. */
+/* Slowtide · Lagoon — deep-water ground, cyan→violet→pink dot scale. */
 @plugin "daisyui/theme" {
-  name: 'reflib';
+  name: 'lagoon';
   default: true;
-  color-scheme: light;
-
-  --color-base-100: #faf8f4;
-  --color-base-200: #f1eee7;
-  --color-base-300: #e4dfd4;
-  --color-base-content: #2b2822;
-
-  --color-primary: #3d6b66;
-  --color-primary-content: #f4f6f5;
-
-  --color-secondary: #b98a3c;
-  --color-secondary-content: #2b2822;
-
-  --color-accent: #8b5e83;
-  --color-accent-content: #f4f0f3;
-
-  --color-neutral: #4a463d;
-  --color-neutral-content: #faf8f4;
-
-  --color-info: #4779a6;
-  --color-info-content: #f4f6f5;
-  --color-success: #4f7d4f;
-  --color-success-content: #f4f6f5;
-  --color-warning: #b9812f;
-  --color-warning-content: #2b2822;
-  --color-error: #a54b42;
-  --color-error-content: #f4f6f5;
-
-  --radius-selector: 0.375rem;
-  --radius-field: 0.375rem;
-  --radius-box: 0.5rem;
-  --border: 1px;
-  --depth: 0;
-  --noise: 0;
-
-  /* Hover/focus accent for already-primary-colored links (can't just
-     darken toward primary since they're already that color). Tailwind's
-     yellow-400 reads fine on the dark theme's near-black background but
-     is only ~1.4:1 against this theme's warm-white paper — nowhere near
-     AA's 4.5:1 — so the light theme gets a darker amber instead. */
-  --color-link-hover: #92400e;
-
-  /* ZebraLogo's eyes: a punched-through hole reads fine in dark theme
-     (shows the dark page background, already looking like a pupil) but
-     just blends into the light paper background here, so fill them
-     solid with the ink color instead. */
-  --zebra-eye-fill: currentColor;
-}
-
-@plugin "daisyui/theme" {
-  name: 'reflib-dark';
   prefersdark: true;
   color-scheme: dark;
 
-  /* Tailwind slate scale (900/800/700/600) instead of the original warm
-     charcoal — cooler, less brown. */
-  --color-base-100: oklch(23.5% 0.013 285.805); /* slate-900 */
-  --color-base-200: oklch(27.5% 0.013 285.805); /* slate-800 */
-  --color-base-300: oklch(33.5% 0.013 285.805); /* slate-700 */
-  --color-base-content: #f1f5f9; /* slate-100, cooled to match */
+  --color-base-100: #071a2b;   /* --bg */
+  --color-base-200: #0c2338;   /* --surface (cards, panels) */
+  --color-base-300: #1f3d5c;   /* --border */
+  --color-base-content: #e4f0fa;
 
-  /* oklch(37% 0.013 285.805) */
+  --color-primary: #5fc4f0;    /* --link */
+  --color-primary-content: #071a2b;
+  --color-secondary: #ff5fb8;  /* --dot-6 */
+  --color-secondary-content: #071a2b;
+  --color-accent: #7f8af6;     /* --dot-4 */
+  --color-accent-content: #071a2b;
+  --color-info: #22c8f0;       /* --dot-1 */
+  --color-info-content: #071a2b;
 
-  --color-primary: #00d5be;
-  --color-primary-content: #12201d;
+  --color-neutral: #2f577d;    /* --border-strong */
+  --color-neutral-content: #e4f0fa;
+  --color-success: #4fd1a5;
+  --color-success-content: #071a2b;
+  --color-warning: #f5c46b;
+  --color-warning-content: #071a2b;
+  --color-error: #ff7ac8;
+  --color-error-content: #071a2b;
 
-  --color-secondary: #d9a857;
-  --color-secondary-content: #241d10;
-
-  --color-accent: #c39abb;
-  --color-accent-content: #241a22;
-
-  --color-neutral: #475569; /* slate-600 */
-  --color-neutral-content: #f1f5f9;
-
-  --color-info: #7fa8cc;
-  --color-info-content: #121c26;
-  --color-success: #82ab7f;
-  --color-success-content: #12200f;
-  --color-warning: #d9a857;
-  --color-warning-content: #241d10;
-  --color-error: #cf7c72;
-  --color-error-content: #260f0c;
-
-  --radius-selector: 0.375rem;
-  --radius-field: 0.375rem;
-  --radius-box: 0.5rem;
+  --radius-selector: 999px;    /* badges/pills */
+  --radius-field: 20px;        /* buttons + inputs (pill-ish) */
+  --radius-box: 14px;          /* cards, dialogs */
   --border: 1px;
   --depth: 0;
   --noise: 0;
 
-  --color-link-hover: #facc15;
-
+  --color-link-hover: #ff5fb8;
+  --color-muted: #8fb1cc;
+  --color-border-strong: #2f577d;
   --zebra-eye-fill: transparent;
+
+  --dot-1: #22c8f0; --dot-2: #38aef8; --dot-3: #4f8ff5;
+  --dot-4: #7f8af6; --dot-5: #d06ae0; --dot-6: #ff5fb8;
+  --glow: radial-gradient(70% 60% at 80% 105%, rgb(34 200 240 / .28), transparent 65%),
+          radial-gradient(55% 45% at 5% 0%, rgb(255 95 184 / .18), transparent 70%);
+}
+
+/* Slowtide · Paper — light counterpart for the theme toggle. */
+@plugin "daisyui/theme" {
+  name: 'paper';
+  color-scheme: light;
+
+  --color-base-100: #f6f2ea;
+  --color-base-200: #fffdf8;
+  --color-base-300: #e3dccd;
+  --color-base-content: #1d1a20;
+
+  --color-primary: #0f6e64;
+  --color-primary-content: #ffffff;
+  --color-secondary: #c93f7c;
+  --color-secondary-content: #ffffff;
+  --color-accent: #8f4fc0;
+  --color-accent-content: #ffffff;
+  --color-info: #3c6fc4;
+  --color-info-content: #ffffff;
+
+  --color-neutral: #cfc6b3;
+  --color-neutral-content: #1d1a20;
+  --color-success: #2f7d5b;
+  --color-success-content: #ffffff;
+  --color-warning: #9a6412;
+  --color-warning-content: #ffffff;
+  --color-error: #b3325f;
+  --color-error-content: #ffffff;
+
+  --radius-selector: 999px;
+  --radius-field: 20px;
+  --radius-box: 14px;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+
+  --color-link-hover: #c93f7c;
+  --color-muted: #6b6474;
+  --color-border-strong: #cfc6b3;
+  --zebra-eye-fill: currentColor;
+
+  --dot-1: #3fb8a6; --dot-2: #4f93c4; --dot-3: #6d5bd0;
+  --dot-4: #8f4fc0; --dot-5: #b0469f; --dot-6: #c93f7c;
+  --glow: radial-gradient(60% 55% at 85% 110%, rgb(109 91 208 / .22), transparent 70%),
+          radial-gradient(45% 40% at 0% 85%, rgb(201 63 124 / .12), transparent 70%);
 }
 
 @theme {
-  --font-serif: 'Source Serif 4', Georgia, serif;
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-serif: 'Cormorant Garamond', Georgia, serif;
+  --font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'DM Mono', ui-monospace, monospace;
+  --color-muted: var(--color-muted);
+  --color-border-strong: var(--color-border-strong);
 }
 
-html {
-  font-family: var(--font-sans);
+html { font-family: var(--font-sans); }
+
+body {
+  background: var(--glow), var(--color-base-100);
+  background-attachment: fixed;
 }
 
+/* Cormorant has a small x-height and thin strokes: set it larger, never bold. */
 .font-display {
   font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
 }
 
 @layer base {
-  footer p {
-    @apply !mb-6;
-  }
+  footer p { @apply !mb-6; }
 }
 
-/* Shared style for an inline text link: primary-colored and underlined by
-   default, switching to --color-link-hover (not primary again, since the
-   text is already that color) on hover and keyboard focus alike. */
 @utility inline-link {
   color: var(--color-primary);
   text-decoration: underline;
-
-  &:hover,
-  &:focus-visible {
-    color: var(--color-link-hover);
-  }
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+  transition: color 240ms cubic-bezier(.2,.7,.2,1);
+  &:hover, &:focus-visible { color: var(--color-link-hover); }
 }
 
-/* Shared style for a form field: amber border by default, switching to
-   primary green on focus. Pair with daisyUI's input-bordered /
-   textarea-bordered / select-bordered (or btn-outline) so only the
-   border color is overridden. */
+/* Fields: strong border at rest, primary on focus (pink border dropped). */
 @utility field-accent {
-  border-color: var(--color-link-hover);
-
-  &:focus {
-    border-color: var(--color-primary);
-    outline: none;
-  }
+  border-color: var(--color-border-strong);
+  &:hover { border-color: var(--color-primary); }
+  &:focus { border-color: var(--color-primary); outline: none; box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-primary) 25%, transparent); }
 }
 
-/* Off-canvas panels (filter drawer, nav menu): both are a plain <dialog>
-   whose [open] attribute stays true for the whole slide-out close
-   animation — the matching inline script only calls .close() once the
-   panel's transitionend fires, removing it from the top layer at that
-   point instead of instantly. The `.is-open` class (added a frame after
-   showModal(), removed to kick off the close animation) drives the
-   slide + backdrop fade; [open] alone only controls display. */
-#filter-dialog[open],
-#nav-dialog[open] {
-  display: flex;
+/* Dotted gradient rule (Slowtide DotRule). */
+@utility dot-rule {
+  height: 10px;
+  background: linear-gradient(90deg, var(--dot-1), var(--dot-3), var(--dot-6));
+  mask: radial-gradient(circle, #000 2px, transparent 2.4px) 0 0 / 10px 10px;
 }
 
-#filter-dialog::backdrop,
-#nav-dialog::backdrop {
+#filter-dialog[open], #nav-dialog[open] { display: flex; }
+
+#filter-dialog::backdrop, #nav-dialog::backdrop {
   background-color: rgb(0 0 0 / 0);
   transition: background-color 0.25s ease;
 }
-
-#filter-dialog.is-open::backdrop,
-#nav-dialog.is-open::backdrop {
-  background-color: rgb(0 0 0 / 0.5);
+#filter-dialog.is-open::backdrop, #nav-dialog.is-open::backdrop {
+  background-color: rgb(3 10 20 / 0.6);
+  backdrop-filter: blur(2px);
 }
 
-/* Filter panel: a bottom sheet on mobile, a right-hand drawer from md: up. */
-.filter-panel {
-  transform: translateY(100%);
-  transition: transform 0.25s ease;
-}
-
-#filter-dialog.is-open .filter-panel {
-  transform: translateY(0);
-}
-
+.filter-panel { transform: translateY(100%); transition: transform 0.25s ease; }
+#filter-dialog.is-open .filter-panel { transform: translateY(0); }
 @media (min-width: 768px) {
-  .filter-panel {
-    transform: translateX(100%);
-  }
-
-  #filter-dialog.is-open .filter-panel {
-    transform: translateX(0);
-  }
+  .filter-panel { transform: translateX(100%); }
+  #filter-dialog.is-open .filter-panel { transform: translateX(0); }
 }
 
-/* Site nav menu: a right-hand drawer, same <dialog> pattern as the filter
-   panel above. */
-.nav-panel {
-  transform: translateX(100%);
-  transition: transform 0.25s ease;
-}
-
-#nav-dialog.is-open .nav-panel {
-  transform: translateX(0);
-}
+.nav-panel { transform: translateX(100%); transition: transform 0.25s ease; }
+#nav-dialog.is-open .nav-panel { transform: translateX(0); }
 
 @media (prefers-reduced-motion: reduce) {
-  #filter-dialog::backdrop,
-  #nav-dialog::backdrop,
-  .filter-panel,
-  .nav-panel {
-    transition: none;
-  }
+  #filter-dialog::backdrop, #nav-dialog::backdrop,
+  .filter-panel, .nav-panel, .inline-link { transition: none; }
 }
 
-/* Printed disease pages should always read as black ink on white paper,
-   regardless of which theme (light/dark, system or user-chosen) is active
-   on screen — otherwise dark-theme's pale text color prints near-invisible
-   against the white page most browsers force for printing. */
 @media print {
-  :root,
-  [data-theme] {
+  :root, [data-theme] {
     color-scheme: light !important;
     --color-base-100: #ffffff !important;
     --color-base-200: #ffffff !important;
@@ -231,4 +185,5 @@ html {
     --color-primary: #1a1a1a !important;
     --zebra-eye-fill: currentColor !important;
   }
+  body { background: #fff !important; }
 }

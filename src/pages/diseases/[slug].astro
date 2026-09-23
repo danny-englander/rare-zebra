@@ -36,24 +36,24 @@ const { disease } = Astro.props;
 
     <div class='hidden print:mb-8 print:flex print:items-center print:gap-2'>
       <ZebraLogo class='h-10 w-6 text-black' />
-      <span class='font-display text-xl font-semibold'>Rare Zebra</span>
+      <span class='font-display text-2xl font-medium'>Rare Zebra</span>
     </div>
 
     <article class='mt-6 print:mt-0' data-pagefind-body>
       <p
-        class='text-base text-base-content/95'
+        class='text-base text-muted'
         data-pagefind-meta={`orphaCode:${disease.orphaCode}`}
       >
         {disease.orphaCode}
       </p>
       <h1
-        class='font-display mt-1 text-4xl font-semibold tracking-tight sm:text-5xl print:text-3xl'
+        class='font-display mt-1 text-4xl font-medium tracking-tight sm:text-5xl print:text-3xl'
       >
         {disease.name}
       </h1>
       {
         disease.synonyms.length > 0 && (
-          <p class='mt-2 text-base-content/95'>
+          <p class='mt-2 text-base-content'>
             Also called {disease.synonyms.join(", ")}
           </p>
         )
@@ -63,7 +63,7 @@ const { disease } = Astro.props;
         class='mt-8 grid grid-cols-1 gap-x-8 gap-y-4 border-y border-base-300 py-6 sm:grid-cols-2 print:mt-4 print:border-0 print:py-0'
       >
         <div>
-          <dt class='text-sm text-base-content/95'>Body system</dt>
+          <dt class='text-sm text-muted'>Body system</dt>
           <dd
             class='mt-1'
             data-pagefind-filter={`System:${disease.system}`}
@@ -73,7 +73,7 @@ const { disease } = Astro.props;
           </dd>
         </div>
         <div>
-          <dt class='text-sm text-base-content/95'>Inheritance pattern</dt>
+          <dt class='text-sm text-muted'>Inheritance pattern</dt>
           <dd
             class='mt-1'
             data-pagefind-meta={`inheritance:${disease.inheritance.join(", ")}`}
@@ -89,7 +89,7 @@ const { disease } = Astro.props;
           </dd>
         </div>
         <div>
-          <dt class='text-sm text-base-content/95'>Typical age of onset</dt>
+          <dt class='text-sm text-muted'>Typical age of onset</dt>
           <dd
             class='mt-1'
             data-pagefind-meta={`ageOfOnset:${disease.ageOfOnset.join(", ")}`}
@@ -105,7 +105,7 @@ const { disease } = Astro.props;
           </dd>
         </div>
         <div>
-          <dt class='text-sm text-base-content/95'>Estimated prevalence</dt>
+          <dt class='text-sm text-muted'>Estimated prevalence</dt>
           <dd
             class='mt-1'
             data-pagefind-meta={`prevalence:${disease.prevalence}`}
@@ -114,7 +114,7 @@ const { disease } = Astro.props;
           </dd>
         </div>
         <div>
-          <dt class='text-sm text-base-content/95'>Rarity class</dt>
+          <dt class='text-sm text-muted'>Rarity class</dt>
           <dd
             class='mt-1'
             data-pagefind-filter={`Rarity:${disease.rarity}`}
@@ -133,7 +133,7 @@ const { disease } = Astro.props;
       </p>
 
       <div class='mt-8 print:mt-6'>
-        <h2 class='text-base font-medium text-base-content/95'>Common signs</h2>
+        <h2 class='text-base font-medium text-base-content'>Common signs</h2>
         <ul class='mt-3 flex flex-wrap gap-2'>
           {
             disease.symptoms.map((symptom) => (
