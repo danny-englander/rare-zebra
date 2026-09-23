@@ -9,7 +9,7 @@ import ThemeToggle from "./ThemeToggle.astro";
     <div class='flex items-center justify-between gap-4'>
       <a
         href='/'
-        class='flex items-center gap-2 font-display text-xl font-semibold tracking-tight text-base-content hover:text-primary focus-visible:text-primary'
+        class='flex items-center gap-2 font-display text-2xl font-medium tracking-tight text-base-content hover:text-secondary focus-visible:text-secondary'
       >
         <ZebraLogo class='h-[46px] w-[29px] md:h-[74px] md:w-[47px]' />
         Rare Zebra
@@ -19,8 +19,9 @@ import ThemeToggle from "./ThemeToggle.astro";
         <MainNav />
       </div>
     </div>
-    <p class='mt-1 pb-3 text-sm text-base-content/80'>
+    <p class='mt-1 pb-3 text-sm text-muted'>
       Rare disease search prototype built on Orphanet data
     </p>
+    <div class='dot-rule w-24 mb-3' aria-hidden='true'></div>
   </div>
 </header>

@@ -21,7 +21,7 @@ backend.
 
 - **Astro** (static output) — every disease gets its own pre-rendered page
 - **Tailwind 4** via `@tailwindcss/vite`
-- **daisyUI 5** — custom "reflib" light/dark theme (see `src/styles/global.css`)
+- **daisyUI 5** — custom "lagoon"/"paper" dark/light theme (see `src/styles/global.css`)
 - **Pagefind** — indexes the built HTML after `astro build`; a plain-JS
   script in `src/pages/index.astro` calls Pagefind's JS API directly for
   instant search + facet counts (no Choices.js, no PagefindUI widget)

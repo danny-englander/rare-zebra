@@ -24,12 +24,12 @@ const formattedCommitDate = commitDate
       <div>
         <a
           href='/'
-          class='flex items-center gap-2 font-display text-xl font-semibold tracking-tight text-base-content hover:text-primary focus-visible:text-primary'
+          class='flex items-center gap-2 font-display text-xl font-medium tracking-tight text-base-content hover:text-primary focus-visible:text-primary'
         >
           <ZebraLogo class='h-[30px] w-[19px] text-primary' />
           Rare Zebra
         </a>
-        <div class='mt-3 space-y-2 text-base text-base-content/95'>
+        <div class='mt-3 space-y-2 text-base text-base-content'>
           <p>
             This is a prototype. Disease summaries are simplified and not a
             substitute for medical advice.
@@ -58,7 +58,7 @@ const formattedCommitDate = commitDate
 
       <div class='md:w-fit md:justify-self-center'>
         <h2
-          class='font-display text-base font-semibold tracking-wide text-base-content/70 uppercase'
+          class='font-display text-base font-medium tracking-wide text-base-content/70 uppercase'
         >
           Menu
         </h2>
@@ -80,11 +80,11 @@ const formattedCommitDate = commitDate
 
       <div>
         <h2
-          class='font-display text-base font-semibold tracking-wide text-base-content/70 uppercase'
+          class='font-display text-base font-medium tracking-wide text-base-content/70 uppercase'
         >
           Build
         </h2>
-        <div class='mt-3 space-y-1 text-base text-base-content/95'>
+        <div class='mt-3 space-y-1 text-base text-base-content'>
           {
             commitShortSha && (
               <p>
@@ -121,7 +121,7 @@ const formattedCommitDate = commitDate
           </p>
         </div>
         <ul
-          class='mt-3 list-disc space-y-1 pl-4 text-base text-base-content/95'
+          class='mt-3 list-disc space-y-1 pl-4 text-base text-base-content'
         >
           <li>
             Built with <a
