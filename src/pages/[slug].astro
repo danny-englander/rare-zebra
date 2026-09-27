@@ -11,11 +11,11 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { title, description } = entry.data;
+const { title, metaTitle, description } = entry.data;
 const { Content } = await render(entry);
 ---
 
-<Layout title={title} description={description}>
+<Layout title={metaTitle ?? title} description={description}>
   <main class='mx-auto max-w-5xl px-4 py-8 sm:px-6'>
     <h1 class='font-display text-4xl font-medium tracking-tight sm:text-5xl'>
       {title}
