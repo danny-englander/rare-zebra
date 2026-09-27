@@ -1,5 +1,6 @@
 ---
 title: About
+metaTitle: About Danny Englander and Rare Zebra
 description: What the Rare Zebra prototype is, and what it isn't.
 ---
 
