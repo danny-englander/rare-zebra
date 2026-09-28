@@ -12,8 +12,7 @@ description: What the Rare Zebra prototype is, and what it isn't.
 </figure>
 
 I'm Danny Englander. I was recently diagnosed with two rare diseases,
-[Myasthenia gravis](/diseases/myasthenia-gravis/) and
-[Rippling muscle disease](/diseases/rippling-muscle-disease/). I'm
+[Myasthenia gravis with Rippling muscle disease](/diseases/rippling-muscle-disease-with-myasthenia-gravis/). I'm
 also experiencing as of yet unexplained neuropathy in my feet, toes, glutes,
 fingers, and hands as well as extreme pain. Diabetes, metabolic, and vitamin deficiencies have all been ruled out as well as a negative CASPR2 test and a negative Sjögren's test. My chest CT with contrast was fine and a second EMG is upcoming. I am also hoping for a lip biopsy and a skin punch biopsy but of course one step at a time. 🙂
 
