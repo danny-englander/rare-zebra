@@ -337,11 +337,25 @@ const facetGroups = [
     </div>
   </dialog>
 
-  <script
-    type='application/json'
-    id='diseases-data'
-    set:html={JSON.stringify(diseases)}
-  />
+  {/* Dev-only fallback data (see the Pagefind catch below). Production
+      search runs entirely on Pagefind, so shipping the dataset in every
+      build's HTML would only cost page weight. Trimmed to the fields the
+      fallback reads — definitions and links aren't needed here. */}
+  {
+    import.meta.env.DEV && (
+      <script
+        type='application/json'
+        id='diseases-data'
+        set:html={JSON.stringify(
+          diseases.map(
+            ({ slug, name, synonyms, symptoms, orphaCode, system, inheritance, ageOfOnset, rarity, note }) => ({
+              slug, name, synonyms, symptoms, orphaCode, system, inheritance, ageOfOnset, rarity, note,
+            }),
+          ),
+        )}
+      />
+    )
+  }
 
   <script is:inline>
     (function () {
