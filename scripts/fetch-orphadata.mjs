@@ -10,15 +10,17 @@
 // Sources used:
 //   - Classification files (product3_<id>.xml) — disease name, ORPHAcode,
 //     and which body-system classification it belongs to
-//   - product1 (JSON)                          — synonyms
+//   - product1 (JSON)                          — synonyms, definitions,
+//                                                external cross-references
 //   - product9_ages.xml ("natural history")     — type of inheritance
 //   - product9_prev.xml ("epidemiology")        — prevalence
 //   - product4.xml ("phenotypes")               — HPO-coded clinical signs
 //
-// Orphadata's free bulk products do NOT include prose definitions/summaries
-// — that text only exists on the Orphanet website. Rather than inventing
-// medical description text, this script builds a short factual line from
-// the structured data instead (see `buildNote` below).
+// product1 carries Orphanet's own prose Definition for most (not all)
+// disorders, stored as `definition` and shown on the detail page only.
+// Search result cards use `note`, a short factual line built from the
+// structured data (see `buildNote` below), which is also the detail page's
+// fallback where no definition exists.
 
 import { XMLParser } from "fast-xml-parser";
 import { mkdir, writeFile, readFile, stat } from "node:fs/promises";
@@ -226,9 +228,56 @@ async function loadExtraPinnedDisorders() {
   return result;
 }
 
-// --- product1 (JSON): synonyms, keyed by OrphaCode ---
+// --- product1 (JSON): synonyms, definitions, and external references,
+// keyed by OrphaCode ---
 
-async function loadSynonyms() {
+// Definitions contain a little inline markup (<i> around gene names) and
+// HTML entities. Store plain text so it's safe everywhere it's used (page
+// body, meta description, Pagefind excerpt) without rendering raw HTML.
+// Only <i>/</i> is stripped — a bare "<" elsewhere is a real less-than sign
+// (e.g. "<50 years").
+function toPlainText(html) {
+  return html
+    .replace(/<\/?i>/gi, "")
+    .replace(/&nbsp;|&#160;/g, " ")
+    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(Number(n)))
+    .replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function getDefinition(d) {
+  for (const info of d.SummaryInformationList?.[0]?.SummaryInformation ?? []) {
+    for (const section of info.TextSectionList?.[0]?.TextSection ?? []) {
+      if (section.TextSectionType?.[0]?.Name?.[0]?.label === "Definition" && section.Contents) {
+        return toPlainText(section.Contents);
+      }
+    }
+  }
+  return null;
+}
+
+// Outbound "learn more" links. Only exact ("E") mappings are used for
+// OMIM/MONDO so a link never points at a broader or narrower concept.
+// GARD is left out on purpose: its pages need GARD's own name slug in the
+// URL (/diseases/<id>/<slug>), which product1 doesn't provide.
+function getExternalLinks(d, code) {
+  const links = [{ source: "Orphanet", id: `ORPHA:${code}`, url: `https://www.orpha.net/en/disease/detail/${code}` }];
+  for (const ref of d.ExternalReferenceList?.[0]?.ExternalReference ?? []) {
+    const exact = ref.DisorderMappingRelation?.[0]?.Name?.[0]?.label?.startsWith("E ");
+    if (!exact) continue;
+    if (ref.Source === "OMIM") {
+      links.push({ source: "OMIM", id: ref.Reference, url: `https://omim.org/entry/${ref.Reference}` });
+    } else if (ref.Source === "MONDO") {
+      links.push({ source: "Monarch", id: `MONDO:${ref.Reference}`, url: `https://monarchinitiative.org/MONDO:${ref.Reference}` });
+    } else if (ref.Source === "ICD-11" && ref.DisorderMappingICDRefUrl) {
+      links.push({ source: "ICD-11", id: ref.Reference, url: ref.DisorderMappingICDRefUrl });
+    }
+  }
+  return links;
+}
+
+async function loadProduct1() {
   const tarPath = await downloadToCache(
     "https://www.orphadata.com/data/json/en_product1.json.tar.gz",
     "en_product1.json.tar.gz"
@@ -243,12 +292,17 @@ async function loadSynonyms() {
   const data = JSON.parse(raw);
   const disorders = data.JDBOR[0].DisorderList[0].Disorder;
 
-  const map = new Map();
+  const synonymsByCode = new Map();
+  const definitionByCode = new Map();
+  const linksByCode = new Map();
   for (const d of disorders) {
-    const synonyms = (d.SynonymList?.[0]?.Synonym ?? []).map((s) => s.label);
-    map.set(String(d.OrphaCode), synonyms);
+    const code = String(d.OrphaCode);
+    synonymsByCode.set(code, (d.SynonymList?.[0]?.Synonym ?? []).map((s) => s.label));
+    const definition = getDefinition(d);
+    if (definition) definitionByCode.set(code, definition);
+    linksByCode.set(code, getExternalLinks(d, code));
   }
-  return map;
+  return { synonymsByCode, definitionByCode, linksByCode };
 }
 
 // --- product9_ages.xml ("natural history"): type of inheritance AND
@@ -355,9 +409,10 @@ async function loadSymptoms(neededCodes) {
 }
 
 function buildNote(system, code) {
-  // Orphadata's free bulk products don't include prose definitions, so
-  // this is a short factual line built from real structured data rather
-  // than invented medical description text.
+  // A short factual line built from real structured data, shown on search
+  // result cards (the full `definition` is detail-page only) and as the
+  // detail page's description for disorders with no Orphanet definition,
+  // rather than invented medical description text.
   return `ORPHA:${code} is classified under "${system}" in the Orphanet nomenclature.`;
 }
 
@@ -379,8 +434,8 @@ async function main() {
   console.log("Fetching extra pinned disorders outside the 5 classifications (product7)...");
   const extraPinned = await loadExtraPinnedDisorders();
 
-  console.log("Fetching synonyms (product1)...");
-  const synonymsByCode = await loadSynonyms();
+  console.log("Fetching synonyms, definitions + external references (product1)...");
+  const { synonymsByCode, definitionByCode, linksByCode } = await loadProduct1();
 
   console.log("Fetching inheritance + age of onset (product9_ages)...");
   const { inheritanceByCode, ageOfOnsetByCode } = await loadNaturalHistory();
@@ -423,7 +478,9 @@ async function main() {
     prevalence: prevalenceByCode.get(code) ?? "Not documented in Orphadata",
     rarity: rarityByCode.get(code) ?? "Not documented in Orphadata",
     note: buildNote(system, code),
+    definition: definitionByCode.get(code) ?? null,
     symptoms: symptomsByCode.get(code) ?? [],
+    externalLinks: linksByCode.get(code) ?? [],
   }));
 
   const output = { dataVersion, diseases };

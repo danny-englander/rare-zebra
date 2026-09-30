@@ -40,16 +40,31 @@ ORPHAcode:
 | Source file | What it provides |
 |---|---|
 | `en_product3_<id>.xml` (classifications) | Real disease names + ORPHAcodes, grouped by body-system classification |
-| `en_product1.json` (alignments) | Synonyms |
+| `en_product1.json` (alignments) | Synonyms, Orphanet prose definitions, and outbound references (OMIM, MONDO, ICD-11) |
 | `en_product9_ages.xml` (natural history) | Type of inheritance + average age of onset (both live in this one file; parsed together) |
 | `en_product9_prev.xml` (epidemiology) | Prevalence estimates + rarity class |
 | `en_product4.xml` (phenotypes) | HPO-coded clinical signs, filtered to "Very frequent" / "Frequent" / "Occasional" |
 
-**One honest gap:** Orphadata's free bulk products don't include prose
-definitions — that text only lives on the Orphanet website. Rather than
-inventing medical description text, each disease's `note` field is a short
-factual line built from the real structured data instead
-(`ORPHA:<code> is classified under "<system>"...`).
+**Definitions come from Orphanet itself.** `en_product1.json` carries
+Orphanet's own prose Definition for most disorders (772 of the 921 in the
+current sample), stored as `definition` and shown on the detail page only,
+under "About this disease" (Pagefind still indexes it, so words in a
+definition are searchable). The source has a little inline markup (`<i>`
+around gene names) and HTML entities, which the fetch script strips/decodes
+to plain text. Search result cards deliberately stay short: they show
+`note`, a factual line built from the structured data
+(`ORPHA:<code> is classified under "<system>"...`), which is also the
+detail page's description for disorders with no definition — rather than
+inventing medical description text.
+
+**"Learn more" links** come from the same file's external references:
+always Orphanet, plus OMIM, Monarch (MONDO) and ICD-11 when Orphanet marks
+the mapping as exact (`E`) — broader/narrower mappings are skipped so a
+link never points at a different concept. GARD is deliberately left out:
+its URLs need GARD's own name slug (`/diseases/<id>/<slug>`), which
+product1 doesn't provide. (OMIM sits behind a browser security
+verification, so a `curl` or link checker gets a 403 from it — that's
+expected, not a broken link; real visitors pass through to the page.)
 
 **Eligibility is based on `DisorderType`, not tree position.** An earlier
 version of this script only included "leaf" nodes (no children) in the

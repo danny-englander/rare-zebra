@@ -3,9 +3,12 @@
 // diseases.generated.json. Don't hand-edit the generated file; re-run the
 // script instead (e.g. after changing which classifications/caps it pulls).
 //
-// Orphadata's free bulk products don't include prose definitions, so
-// `note` is a short factual line built from real structured data rather
-// than an invented medical description — see buildNote() in the script.
+// `note` is a short factual line built from real structured data (shown on
+// search result cards) rather than an invented medical description — see
+// buildNote() in the script. `definition` is Orphanet's own prose
+// definition from product1, shown on the detail page only, or null where
+// Orphanet has none. `externalLinks` are outbound references
+// (Orphanet, OMIM, Monarch/MONDO, ICD-11) from the same product1 file.
 //
 // `inheritance` and `ageOfOnset` are arrays because a disease can have
 // more than one documented value (e.g. onset varies by case) — each is
@@ -24,7 +27,15 @@ export interface Disease {
   prevalence: string;
   rarity: string;
   note: string;
+  definition: string | null;
   symptoms: string[];
+  externalLinks: ExternalLink[];
+}
+
+export interface ExternalLink {
+  source: string;
+  id: string;
+  url: string;
 }
 
 export const dataVersion: string = (generated as { dataVersion: string }).dataVersion;
