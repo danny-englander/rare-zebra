@@ -21,6 +21,10 @@ list.
 - A modern SVG zebra logo, replacing the original hexagon mark
 - A printable, citable PDF view for each disease detail page, with an
   Orphanet source citation and data release date
+- Orphanet's own disease definitions on each detail page, for the 772
+  diseases that have one
+- "Learn more" links on each disease page to Orphanet, plus OMIM, Monarch,
+  and ICD-11 where Orphanet lists an exact match
 
 ## Planned
 
