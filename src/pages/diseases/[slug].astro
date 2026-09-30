@@ -132,18 +132,20 @@ const { disease } = Astro.props;
         {disease.note}
       </p>
 
-      <div class='mt-8 print:mt-6'>
-        <h2 class='text-base font-medium text-base-content'>Common signs</h2>
-        <ul class='mt-3 flex flex-wrap gap-2'>
-          {
-            disease.symptoms.map((symptom) => (
-              <li class='rounded-field border border-base-300 px-3 py-1 text-base'>
-                {symptom}
-              </li>
-            ))
-          }
-        </ul>
-      </div>
+      {
+        disease.symptoms.length > 0 && (
+          <div class='mt-8 print:mt-6'>
+            <h2 class='text-base font-medium text-base-content'>Common signs</h2>
+            <ul class='mt-3 flex flex-wrap gap-2'>
+              {disease.symptoms.map((symptom) => (
+                <li class='rounded-field border border-base-300 px-3 py-1 text-base'>
+                  {symptom}
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+      }
 
       <p class='hidden print:block print:mt-10 print:text-sm print:text-base-content/70'>
         Source: Orphanet (Orphadata), {disease.orphaCode}. Data release {dataVersion}. www.orphadata.com — CC BY 4.0.
