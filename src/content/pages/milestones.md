@@ -25,6 +25,8 @@ list.
   diseases that have one
 - "Learn more" links on each disease page to Orphanet, plus OMIM, Monarch,
   and ICD-11 where Orphanet lists an exact match
+- Searches saved in the URL, so they can be bookmarked or shared, and
+  "Back to search" on a disease page returns to the same results
 
 ## Planned
 
