@@ -159,6 +159,9 @@ body {
   background-color: rgb(3 10 20 / 0.6);
 }
 /* Results update live behind the filter panel, so keep them legible. */
+#filter-dialog.is-open::backdrop {
+  background-color: rgb(3 10 20 / 0.2);
+}
 #nav-dialog.is-open::backdrop {
   backdrop-filter: blur(2px);
 }
