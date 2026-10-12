@@ -32,7 +32,9 @@ const metaDescription =
       data-pagefind-ignore
       class='print:hidden flex items-center justify-between gap-4'
     >
-      <a href='/' class='text-base inline-link'>&larr; Back to search</a>
+      <a href='/' id='back-to-search' class='text-base inline-link'
+        >&larr; Back to search</a
+      >
       <button
         type='button'
         id='print-trigger'
@@ -190,6 +192,22 @@ const metaDescription =
 </Layout>
 
 <script is:inline>
+  // Point "Back to search" at the visitor's last search (query, filters,
+  // and Show-more depth), saved by the search page. Only same-site paths
+  // are accepted; anything else leaves the plain "/" link in place.
+  (function () {
+    var back = document.getElementById("back-to-search");
+    if (!back) return;
+    try {
+      var last = sessionStorage.getItem("rarezebra:lastSearch");
+      if (last && last.charAt(0) === "/" && last.charAt(1) !== "/") {
+        back.href = last;
+      }
+    } catch (e) {
+      // Storage blocked; keep the default link.
+    }
+  })();
+
   (function () {
     var trigger = document.getElementById("print-trigger");
     if (!trigger) return;

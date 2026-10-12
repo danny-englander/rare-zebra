@@ -390,7 +390,12 @@ const facetGroups = [
       var fallbackData = null;
       var currentItems = [];
       var visibleCount = PAGE_SIZE;
+      // How many results to show after the next search, when restoring a
+      // "Show more" depth from the URL. Consumed (reset to 0) by runSearch.
+      var restoredVisibleCount = 0;
       var PREFERRED_ORIGIN = "https://www.rarezebra.org";
+      // Also read by the disease detail page's "Back to search" link.
+      var LAST_SEARCH_KEY = "rarezebra:lastSearch";
 
       // Pagefind may emit a host-absolute URL from <link rel="canonical">.
       // Pin it to the primary origin so result links never leak apex/http/
@@ -455,6 +460,51 @@ const facetGroups = [
           }
         });
         return filters;
+      }
+
+      // Search state lives in the URL (?q=…&System=…&Inheritance=…&shown=…)
+      // so a search can be bookmarked or shared, and so returning from a
+      // disease page lands back on the same results. Repeated params hold
+      // multiple values in one facet group.
+      function readStateFromUrl() {
+        var params = new URLSearchParams(window.location.search);
+        searchInput.value = params.get("q") || "";
+        checkboxes.forEach(function (cb) {
+          cb.checked =
+            params
+              .getAll(cb.dataset.facetGroup)
+              .indexOf(cb.dataset.facetValue) !== -1;
+        });
+        var shown = parseInt(params.get("shown"), 10);
+        restoredVisibleCount = shown > PAGE_SIZE ? shown : 0;
+      }
+
+      function writeStateToUrl() {
+        var params = new URLSearchParams();
+        var query = searchInput.value.trim();
+        if (query) params.set("q", query);
+        var filters = getActiveFilters();
+        Object.keys(filters).forEach(function (group) {
+          filters[group].forEach(function (value) {
+            params.append(group, value);
+          });
+        });
+        if (visibleCount > PAGE_SIZE) params.set("shown", visibleCount);
+        var search = params.toString();
+        var url = window.location.pathname + (search ? "?" + search : "");
+        // replaceState, not pushState: each keystroke shouldn't become a
+        // separate Back-button step.
+        history.replaceState(null, "", url);
+        try {
+          sessionStorage.setItem(LAST_SEARCH_KEY, url);
+        } catch (e) {
+          // Storage blocked; the detail page falls back to plain "/".
+        }
+      }
+
+      function resetVisibleCount() {
+        visibleCount = restoredVisibleCount || PAGE_SIZE;
+        restoredVisibleCount = 0;
       }
 
       function updateCount(group, value, count) {
@@ -592,6 +642,7 @@ const facetGroups = [
           " result" +
           (currentItems.length === 1 ? "" : "s");
         updateFilterTriggerLabel();
+        writeStateToUrl();
 
         if (currentItems.length === 0) {
           resultsList.innerHTML =
@@ -674,7 +725,7 @@ const facetGroups = [
                   };
                 });
                 currentItems.sort(byTitle);
-                visibleCount = PAGE_SIZE;
+                resetVisibleCount();
                 renderPage();
 
                 Object.keys(search.filters || {}).forEach(function (group) {
@@ -731,7 +782,7 @@ const facetGroups = [
             };
           });
           currentItems.sort(byTitle);
-          visibleCount = PAGE_SIZE;
+          resetVisibleCount();
           renderPage();
 
           // Simplified dev-only counts: reflects the query alone, not
@@ -802,6 +853,9 @@ const facetGroups = [
       }
 
       function init() {
+        // Synchronously, before the async index load, so anything typed
+        // while Pagefind loads isn't overwritten afterward.
+        readStateFromUrl();
         import(/* @vite-ignore */ "/pagefind/pagefind.js")
           .then(function (mod) {
             return mod
